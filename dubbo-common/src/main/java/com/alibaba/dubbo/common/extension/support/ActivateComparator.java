@@ -54,6 +54,8 @@ public class ActivateComparator implements Comparator<Object> {
                 }
             }
         }
+        
+        // 比较before和after
         if ((a1.before().length > 0 || a1.after().length > 0
                 || a2.before().length > 0 || a2.after().length > 0)
                 && spiClass != null) {
@@ -85,6 +87,8 @@ public class ActivateComparator implements Comparator<Object> {
                 }
             }
         }
+        
+        // 比较order
         int n1 = a1 == null ? 0 : a1.order();
         int n2 = a2 == null ? 0 : a2.order();
         // never return 0 even if n1 equals n2, otherwise, o1 and o2 will override each other in collection like HashSet
