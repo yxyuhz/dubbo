@@ -50,7 +50,7 @@ public class UrlUtils {
         }
         String defaultProtocol = defaults == null ? null : defaults.get("protocol");
         if (defaultProtocol == null || defaultProtocol.length() == 0) {
-            defaultProtocol = "dubbo";
+            defaultProtocol = "dubbo";  // 默认协议是dubbo
         }
         String defaultUsername = defaults == null ? null : defaults.get("username");
         String defaultPassword = defaults == null ? null : defaults.get("password");
@@ -67,7 +67,7 @@ public class UrlUtils {
         }
         URL u = URL.valueOf(url);
         boolean changed = false;
-        String protocol = u.getProtocol();
+        String protocol = u.getProtocol();  // 仍以url自带协议为准，如果没有，则使用默认协议
         String username = u.getUsername();
         String password = u.getPassword();
         String host = u.getHost();
@@ -96,7 +96,7 @@ public class UrlUtils {
                 port = defaultPort;
             } else {
                 changed = true;
-                port = 9090;
+                port = 9090;    // 默认端口
             }
         }
         if (path == null || path.length() == 0) {

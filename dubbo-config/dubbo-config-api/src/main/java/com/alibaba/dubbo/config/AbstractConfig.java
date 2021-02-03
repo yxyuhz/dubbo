@@ -104,14 +104,14 @@ public abstract class AbstractConfig implements Serializable {
 
                     String value = null;
                     if (config.getId() != null && config.getId().length() > 0) {
-                        String pn = prefix + config.getId() + "." + property;
+                        String pn = prefix + config.getId() + "." + property;   // 第一种形式获取系统属性
                         value = System.getProperty(pn);
                         if (!StringUtils.isBlank(value)) {
                             logger.info("Use System Property " + pn + " to config dubbo");
                         }
                     }
                     if (value == null || value.length() == 0) {
-                        String pn = prefix + property;
+                        String pn = prefix + property;  // 第二种形式获取系统属性
                         value = System.getProperty(pn);
                         if (!StringUtils.isBlank(value)) {
                             logger.info("Use System Property " + pn + " to config dubbo");
@@ -129,16 +129,16 @@ public abstract class AbstractConfig implements Serializable {
                             }
                         }
                         if (getter != null) {
-                            if (getter.invoke(config) == null) {
+                            if (getter.invoke(config) == null) {    // 判断是否有初始值
                                 if (config.getId() != null && config.getId().length() > 0) {
-                                    value = ConfigUtils.getProperty(prefix + config.getId() + "." + property);
+                                    value = ConfigUtils.getProperty(prefix + config.getId() + "." + property);  // 第一种形式从属性文件获取
                                 }
                                 if (value == null || value.length() == 0) {
-                                    value = ConfigUtils.getProperty(prefix + property);
+                                    value = ConfigUtils.getProperty(prefix + property); // 第二种形式从属性文件获取
                                 }
                                 if (value == null || value.length() == 0) {
                                     String legacyKey = legacyProperties.get(prefix + property);
-                                    if (legacyKey != null && legacyKey.length() > 0) {
+                                    if (legacyKey != null && legacyKey.length() > 0) {  // 第三种形式从属性文件获取
                                         value = convertLegacyValue(legacyKey, ConfigUtils.getProperty(legacyKey));
                                     }
                                 }
@@ -146,7 +146,7 @@ public abstract class AbstractConfig implements Serializable {
                             }
                         }
                     }
-                    if (value != null && value.length() > 0) {
+                    if (value != null && value.length() > 0) {  // 1、系统属性；2、初始值；3、属性文件
                         method.invoke(config, convertPrimitive(method.getParameterTypes()[0], value));
                     }
                 }
@@ -472,7 +472,7 @@ public abstract class AbstractConfig implements Serializable {
                         int i = name.startsWith("get") ? 3 : 2;
                         String key = name.substring(i, i + 1).toLowerCase() + name.substring(i + 1);
                         Object value = method.invoke(this);
-                        if (value != null) {
+                        if (value != null) {    // get / is 开头的方法 有值才会追加
                             buf.append(" ");
                             buf.append(key);
                             buf.append("=\"");

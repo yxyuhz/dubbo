@@ -37,9 +37,9 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 
     @Override
     public <T> Invoker<T> getInvoker(T proxy, Class<T> type, URL url) {
-        // TODO Wrapper cannot handle this scenario correctly: the classname contains '$'
-        final Wrapper wrapper = Wrapper.getWrapper(proxy.getClass().getName().indexOf('$') < 0 ? proxy.getClass() : type);
-        return new AbstractProxyInvoker<T>(proxy, type, url) {
+        // TODO Wrapper cannot handle this scenario correctly: the classname contains '$'   // dubbo的代理类格式是$Adaptive，不能用类的class，只能用接口
+        final Wrapper wrapper = Wrapper.getWrapper(proxy.getClass().getName().indexOf('$') < 0 ? proxy.getClass() : type);  // proxy没有$就用实现类的class，否则就用接口的class，生成wrapper代理
+        return new AbstractProxyInvoker<T>(proxy, type, url) {  // 返回invoker的匿名类实例，当被调用时，委托给wrapper代理调用真正的扩展服务
             @Override
             protected Object doInvoke(T proxy, String methodName,
                                       Class<?>[] parameterTypes,

@@ -23,15 +23,17 @@ import java.util.List;
  * DemoService
  */
 public interface DemoService {
-
+    
     String sayName(String name);
-
+    
     Box getBox();
-
+    
+    void setBox(Box box);   // 增加set方法
+    
     void throwDemoException() throws DemoException;
-
+    
     List<User> getUsers(List<User> users);
-
+    
     int echo(int i);
-
+    
 }

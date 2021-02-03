@@ -159,20 +159,20 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
     }
 
     protected List<URL> loadRegistries(boolean provider) {
-        checkRegistry();
+        checkRegistry();    // 添加系统属性
         List<URL> registryList = new ArrayList<URL>();
         if (registries != null && !registries.isEmpty()) {
-            for (RegistryConfig config : registries) {
+            for (RegistryConfig config : registries) {  // 遍历多个注册中心配置转换为配置中心URL
                 String address = config.getAddress();
                 if (address == null || address.length() == 0) {
-                    address = Constants.ANYHOST_VALUE;
+                    address = Constants.ANYHOST_VALUE;  // 0.0.0.0
                 }
                 String sysaddress = System.getProperty("dubbo.registry.address");
                 if (sysaddress != null && sysaddress.length() > 0) {
                     address = sysaddress;
                 }
                 if (address.length() > 0 && !RegistryConfig.NO_AVAILABLE.equalsIgnoreCase(address)) {
-                    Map<String, String> map = new HashMap<String, String>();
+                    Map<String, String> map = new HashMap<String, String>();    // 将配置参数填充到map
                     appendParameters(map, application);
                     appendParameters(map, config);
                     map.put("path", RegistryService.class.getName());
@@ -188,10 +188,10 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
                             map.put("protocol", "dubbo");
                         }
                     }
-                    List<URL> urls = UrlUtils.parseURLs(address, map);
+                    List<URL> urls = UrlUtils.parseURLs(address, map);  // 将map转换为Registry的url
                     for (URL url : urls) {
-                        url = url.addParameter(Constants.REGISTRY_KEY, url.getProtocol());
-                        url = url.setProtocol(Constants.REGISTRY_PROTOCOL);
+                        url = url.addParameter(Constants.REGISTRY_KEY, url.getProtocol());  // 保存原协议在URL参数中
+                        url = url.setProtocol(Constants.REGISTRY_PROTOCOL); // 更新URL协议为registry
                         if ((provider && url.getParameter(Constants.REGISTER_KEY, true))
                                 || (!provider && url.getParameter(Constants.SUBSCRIBE_KEY, true))) {
                             registryList.add(url);
@@ -275,7 +275,7 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
                 }
                 boolean hasMethod = false;
                 for (java.lang.reflect.Method method : interfaceClass.getMethods()) {
-                    if (method.getName().equals(methodName)) {
+                    if (method.getName().equals(methodName)) {  // 方法名称一致即可
                         hasMethod = true;
                         break;
                     }

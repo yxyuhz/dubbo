@@ -86,7 +86,7 @@ public class ServiceConfigTest {
 
         service.setProvider(provider);
         service.setApplication(app);
-        service.setRegistry(registry);
+        service.setRegistry(registry); // 设置一个注册中心，可以调用setRegistries设置多个注册中心
         service.setInterface(DemoService.class);
         service.setRef(new DemoServiceImpl());
         service.setMethods(Collections.singletonList(method));

@@ -27,6 +27,7 @@ import java.util.List;
  * DemoServiceImpl
  */
 public class DemoServiceImpl implements DemoService {
+    private Box box;
 
     public String sayName(String name) {
         return "say:" + name;
@@ -35,7 +36,12 @@ public class DemoServiceImpl implements DemoService {
     public Box getBox() {
         return null;
     }
-
+    
+    @Override
+    public void setBox(Box box) {
+        this.box = box;
+    }
+    
     public void throwDemoException() throws DemoException {
         throw new DemoException("DemoServiceImpl");
     }

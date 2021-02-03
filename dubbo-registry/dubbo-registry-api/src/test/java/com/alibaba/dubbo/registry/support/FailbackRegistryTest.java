@@ -84,7 +84,7 @@ public class FailbackRegistryTest {
 
         for (int i = 0; i < trytimes; i++) {
             System.out.println("failback registry retry ,times:" + i);
-            //System.out.println(latch.getCount());
+            System.out.println(latch.getCount());
             if (latch.getCount() == 0)
                 break;
             Thread.sleep(sleeptime);

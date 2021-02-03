@@ -37,7 +37,7 @@ public class ReferenceConfigTest {
         registry.setAddress("multicast://224.5.6.7:1234");
 
         ProtocolConfig protocol = new ProtocolConfig();
-        protocol.setName("dubbo");
+        protocol.setName("dubbo");  // 设置协议名称
 
         ServiceConfig<DemoService> demoService;
         demoService = new ServiceConfig<DemoService>();
